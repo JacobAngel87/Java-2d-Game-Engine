@@ -18,22 +18,55 @@ public class Game implements Runnable
 	private Graphics g;
 	private BufferStrategy bs;
 	
+	//Tmp variables to work on frame-rate independence
+	private float playerX;
+	private float playerY;
+	private float speed;
+	
 	public Game(int width, int height, String title)
 	{
 		this.width = width;
 		this.height = height;
 		this.title = title;
+		
+		playerX = 0.0f;
+		playerY = 0.0f;
+		speed = 3.0f;
 	}
 	
 	public void run()
 	{
 		init();
-		
 		running = true;
 		
-		while(running)
+		int fps = 144;
+		double timePerTick = 1000000000 / fps;
+		double delta = 0;
+		long now;
+		long lastTime = System.nanoTime();
+		long timer = 0;
+		int ticks = 0;
+		
+		while (running)
 		{
-			tick();
+			now = System.nanoTime();
+			delta += now - lastTime;
+			timer += now - lastTime;
+			lastTime = now;
+			
+			if(delta >= timePerTick) 
+			{
+				tick();
+			 	ticks++;
+			 	delta -= timePerTick;
+			}
+			 
+			if(timer >= 1000000000) 
+			{
+				System.out.println("Ticks and Frames: " + ticks);
+				ticks = 0;
+				timer = 0;
+			}
 			render();
 		}
 	}
@@ -45,7 +78,8 @@ public class Game implements Runnable
 	
 	private void tick()
 	{
-		System.out.println("Ticking");
+		//TODO Kill V-Sync and implement delta time. 
+		playerX += speed;
 	}
 	
 	private void render()
@@ -60,11 +94,16 @@ public class Game implements Runnable
 		g.clearRect(0, 0, width, height);
 		
 		// Start draw graphics
+		g.setColor(new Color(0, 0, 140, 140));
+		g.fillRect(0, 0, width, height);
+		g.setColor(Color.red);
+		g.fillRect((int) playerX, (int) playerY, 50, 50);
 		
 		// Stop draw graphics
 		
 		bs.show();
 		g.dispose();
+		
 	}
 	
 	public synchronized void start()
