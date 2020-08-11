@@ -1,10 +1,11 @@
 package game_engine.src.Main;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import game_engine.src.Graphics.Display;
+import game_engine.src.States.GameState;
+import game_engine.src.States.State;
 
 public class Game implements Runnable
 {
@@ -18,20 +19,11 @@ public class Game implements Runnable
 	private Graphics g;
 	private BufferStrategy bs;
 	
-	//Tmp variables to work on frame-rate independence
-	private float playerX;
-	private float playerY;
-	private float speed;
+	public static State overworld;
 	
-	public Game(int width, int height, String title)
+	public Game(String title)
 	{
-		this.width = width;
-		this.height = height;
 		this.title = title;
-		
-		playerX = 0.0f;
-		playerY = 0.0f;
-		speed = 3.0f;
 	}
 	
 	public void run()
@@ -73,13 +65,19 @@ public class Game implements Runnable
 	
 	private void init()
 	{
-		display = new Display(width, height, title);
+		display = new Display(title);
+		width = display.getWidth();
+		height = display.getHeight();
+		overworld = new GameState(this);
+		State.setState(overworld);
 	}
 	
 	private void tick()
 	{
-		//TODO Kill V-Sync and implement delta time. 
-		playerX += speed;
+		if(State.getState() != null)
+		{
+			State.getState().tick();
+		}
 	}
 	
 	private void render()
@@ -93,12 +91,11 @@ public class Game implements Runnable
 		g = bs.getDrawGraphics();
 		g.clearRect(0, 0, width, height);
 		
-		// Start draw graphics
-		g.setColor(new Color(0, 0, 140, 140));
-		g.fillRect(0, 0, width, height);
-		g.setColor(Color.red);
-		g.fillRect((int) playerX, (int) playerY, 50, 50);
-		
+		// Start draw graphics;
+		if(State.getState() != null)
+		{
+			State.getState().render(g);
+		}
 		// Stop draw graphics
 		
 		bs.show();

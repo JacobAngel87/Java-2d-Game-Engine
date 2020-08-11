@@ -2,6 +2,7 @@ package game_engine.src.Graphics;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
@@ -11,12 +12,14 @@ public class Display
 	private String title;
 	private JFrame frame;
 	private Canvas canvas;
+	private Dimension screenSize;
 	
-	
-	public Display(int width, int height, String title)
+	public Display(String title)
 	{
-		this.width = width;
-		this.height = height;
+		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		
+		width = screenSize.width;
+		height = screenSize.height;
 		this.title = title;
 		
 		frame = new JFrame(title);
@@ -26,17 +29,17 @@ public class Display
 	
 	private void createDisplay()
 	{
-		frame.setSize(width, height);
+		
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		frame.setUndecorated(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
-		canvas.setPreferredSize(new Dimension(width, height));
-		canvas.setMaximumSize(new Dimension(width, height));
-		canvas.setMinimumSize(new Dimension(width, height));
-		canvas.setFocusable(false);
-		
+		canvas.setPreferredSize(screenSize);
+		canvas.setMaximumSize(screenSize);
+		canvas.setMinimumSize(screenSize);
+	
 		frame.add(canvas);
 		frame.pack();
 	}
@@ -49,5 +52,13 @@ public class Display
 	public Canvas getCanvas()
 	{
 		return canvas;
+	}
+	public int getWidth()
+	{
+		return width;
+	}
+	public int getHeight()
+	{
+		return height;
 	}
 }
