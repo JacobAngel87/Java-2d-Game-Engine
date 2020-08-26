@@ -1,6 +1,7 @@
 package game_engine.src.Main;
 
 import java.awt.Graphics;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 
 import game_engine.src.Graphics.Display;
@@ -21,9 +22,12 @@ public class Game implements Runnable
 	
 	public static State overworld;
 	
+	private KeyManager keyManager;
+	
 	public Game(String title)
 	{
 		this.title = title;
+		keyManager = new KeyManager();
 	}
 	
 	public void run()
@@ -68,12 +72,15 @@ public class Game implements Runnable
 		display = new Display(title);
 		width = display.getWidth();
 		height = display.getHeight();
+		display.getFrame().addKeyListener(keyManager);
 		overworld = new GameState(this);
 		State.setState(overworld);
 	}
 	
 	private void tick()
 	{
+		keyManager.tick();
+		
 		if(State.getState() != null)
 		{
 			State.getState().tick();
@@ -101,6 +108,11 @@ public class Game implements Runnable
 		bs.show();
 		g.dispose();
 		
+	}
+	
+	public KeyManager getKeyManager()
+	{
+		return keyManager;
 	}
 	
 	public synchronized void start()
