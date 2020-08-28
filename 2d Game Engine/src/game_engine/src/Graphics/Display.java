@@ -6,16 +6,14 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
-public class Display 
-{
+public class Display {
 	private int width, height;
 	private String title;
 	private JFrame frame;
 	private Canvas canvas;
 	private Dimension screenSize;
 	
-	public Display(String title)
-	{
+	public Display(String title) {
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		
 		width = screenSize.width;
@@ -27,8 +25,7 @@ public class Display
 		createDisplay();
 	}
 	
-	private void createDisplay()
-	{
+	private void createDisplay() {
 		
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.setUndecorated(true);
@@ -44,21 +41,16 @@ public class Display
 		frame.pack();
 	}
 	
-	public JFrame getFrame()
-	{
+	public JFrame getFrame() {
 		return frame;
 	}
-	
-	public Canvas getCanvas()
-	{
+	public Canvas getCanvas() {
 		return canvas;
 	}
-	public int getWidth()
-	{
+	public int getWidth() {
 		return width;
 	}
-	public int getHeight()
-	{
+	public int getHeight() {
 		return height;
 	}
 }

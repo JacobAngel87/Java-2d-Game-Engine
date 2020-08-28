@@ -4,12 +4,12 @@ import java.awt.Graphics;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 
+import game_engine.src.Graphics.Assets;
 import game_engine.src.Graphics.Display;
 import game_engine.src.States.GameState;
 import game_engine.src.States.State;
 
-public class Game implements Runnable
-{
+public class Game implements Runnable {
 	public int width, height;
 	public String title;
 	
@@ -24,14 +24,12 @@ public class Game implements Runnable
 	
 	private KeyManager keyManager;
 	
-	public Game(String title)
-	{
+	public Game(String title) {
 		this.title = title;
 		keyManager = new KeyManager();
 	}
 	
-	public void run()
-	{
+	public void run() {
 		init();
 		running = true;
 		
@@ -43,22 +41,19 @@ public class Game implements Runnable
 		long timer = 0;
 		int ticks = 0;
 		
-		while (running)
-		{
+		while (running) {
 			now = System.nanoTime();
 			delta += now - lastTime;
 			timer += now - lastTime;
 			lastTime = now;
 			
-			if(delta >= timePerTick) 
-			{
+			if(delta >= timePerTick) {
 				tick();
 			 	ticks++;
 			 	delta -= timePerTick;
 			}
 			 
-			if(timer >= 1000000000) 
-			{
+			if(timer >= 1000000000) {
 				System.out.println("Ticks and Frames: " + ticks);
 				ticks = 0;
 				timer = 0;
@@ -67,31 +62,27 @@ public class Game implements Runnable
 		}
 	}
 	
-	private void init()
-	{
+	private void init() {
 		display = new Display(title);
 		width = display.getWidth();
 		height = display.getHeight();
+		Assets.init();
 		display.getFrame().addKeyListener(keyManager);
 		overworld = new GameState(this);
 		State.setState(overworld);
 	}
 	
-	private void tick()
-	{
+	private void tick() {
 		keyManager.tick();
 		
-		if(State.getState() != null)
-		{
+		if(State.getState() != null) {
 			State.getState().tick();
 		}
 	}
 	
-	private void render()
-	{
+	private void render() {
 		bs = display.getCanvas().getBufferStrategy();
-		if(bs == null)
-		{
+		if(bs == null) {
 			display.getCanvas().createBufferStrategy(3);
 			return;
 		}
@@ -99,8 +90,7 @@ public class Game implements Runnable
 		g.clearRect(0, 0, width, height);
 		
 		// Start draw graphics;
-		if(State.getState() != null)
-		{
+		if(State.getState() != null) {
 			State.getState().render(g);
 		}
 		// Stop draw graphics
@@ -110,21 +100,18 @@ public class Game implements Runnable
 		
 	}
 	
-	public KeyManager getKeyManager()
-	{
+	public KeyManager getKeyManager() {
 		return keyManager;
 	}
 	
-	public synchronized void start()
-	{
+	public synchronized void start() {
 		if(running)
 			return;
 		thread = new Thread(this);
 		thread.run();
 	}
 	
-	public synchronized void stop()
-	{
+	public synchronized void stop() {
 		if(!running)
 			return;
 		try {

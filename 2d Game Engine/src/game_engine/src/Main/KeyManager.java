@@ -9,17 +9,14 @@ public class KeyManager implements KeyListener {
 	private boolean[] keys;
 	public boolean up, down, left, right;
 	
-	public KeyManager()
-	{
+	public KeyManager() {
 		keys = new boolean[256];
 	}
-	public void tick()
-	{
+	public void tick() {
 		up = keys[KeyEvent.VK_UP];
 		down = keys[KeyEvent.VK_DOWN];
 		left = keys[KeyEvent.VK_LEFT];
 		right = keys[KeyEvent.VK_RIGHT];
-		
 	}
 	
 	@Override
