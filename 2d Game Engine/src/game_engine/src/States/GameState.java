@@ -8,6 +8,7 @@ import game_engine.src.Entitys.Player;
 import game_engine.src.Graphics.Assets;
 import game_engine.src.Graphics.ImageLoader;
 import game_engine.src.Main.Game;
+import game_engine.src.Tiles.Tile;
 
 public class GameState extends State {
 	
@@ -27,8 +28,6 @@ public class GameState extends State {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.blue);
-		g.fillRect(0, 0, game.width, game.height);
 		player.render(g);
 	}
 
