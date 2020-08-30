@@ -49,6 +49,7 @@ public class Game implements Runnable {
 			
 			if(delta >= timePerTick) {
 				tick();
+				render();
 			 	ticks++;
 			 	delta -= timePerTick;
 			}
@@ -58,7 +59,6 @@ public class Game implements Runnable {
 				ticks = 0;
 				timer = 0;
 			}
-			render();
 		}
 	}
 	

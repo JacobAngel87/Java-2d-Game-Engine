@@ -16,7 +16,11 @@ public class World {
 	}
 	
 	public void tick() {
-		
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				getTile(x,y).tick();
+			}
+		}
 	}
 	
 	public void render(Graphics g) {

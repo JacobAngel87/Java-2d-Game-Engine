@@ -2,14 +2,18 @@ package game_engine.src.Entitys;
 
 import java.awt.Graphics;
 
+import game_engine.src.Main.Game;
+
 public abstract class Entity {
 	
 	// Protected variables for all Sub-classes
 	protected float x, y;
 	protected int width, height;
+	protected Game game;
 	
 	// Entity constructor method
-	public Entity(float x, float y, int width, int height) {
+	public Entity(Game game, float x, float y, int width, int height) {
+		this.game = game;
 		this.x = x;
 		this.y = y;
 		this.width = width;

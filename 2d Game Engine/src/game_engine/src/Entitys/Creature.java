@@ -1,18 +1,19 @@
 package game_engine.src.Entitys;
 
-import java.awt.Graphics;
+import game_engine.src.Main.Game;
+import game_engine.src.Tiles.Tile;
 
 public abstract class Creature extends Entity {
 	
-	public static final float DEFAULT_SPEED = 1.5f;
+	public static final float DEFAULT_SPEED = Tile.TILEWIDTH / 34;
 	public static final int DEFAULT_WIDTH = 64,
 							DEFAULT_HEIGHT = 64;
 	
 	protected float speed;
 	protected float xMove, yMove;
 	
-	public Creature(float x, float y, int width, int height) {
-		super(x, y, width, height);
+	public Creature(Game game, float x, float y, int width, int height) {
+		super(game, x, y, width, height);
 		speed = DEFAULT_SPEED;
 		xMove = 0;
 		yMove = 0;
