@@ -1,16 +1,17 @@
 package game_engine.src.Main;
 
 import java.awt.Graphics;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 
 import game_engine.src.Graphics.Assets;
 import game_engine.src.Graphics.Display;
+import game_engine.src.Graphics.GameCamera;
 import game_engine.src.States.GameState;
 import game_engine.src.States.State;
 
 public class Game implements Runnable {
-	public int width, height;
+	
+	private int width, height;
 	public String title;
 	
 	private Thread thread;
@@ -23,6 +24,8 @@ public class Game implements Runnable {
 	public static State overworld;
 	
 	private KeyManager keyManager;
+	
+	private GameCamera gameCamera;
 	
 	public Game(String title) {
 		this.title = title;
@@ -67,6 +70,7 @@ public class Game implements Runnable {
 		width = display.getWidth();
 		height = display.getHeight();
 		Assets.init();
+		gameCamera = new GameCamera(this, 0, 0);
 		display.getFrame().addKeyListener(keyManager);
 		overworld = new GameState(this);
 		State.setState(overworld);
@@ -102,6 +106,18 @@ public class Game implements Runnable {
 	
 	public KeyManager getKeyManager() {
 		return keyManager;
+	}
+	
+	public GameCamera getGameCamera() {
+		return gameCamera;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
 	}
 	
 	public synchronized void start() {

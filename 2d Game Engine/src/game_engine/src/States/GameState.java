@@ -15,7 +15,7 @@ public class GameState extends State {
 
 	public GameState(Game game) {
 		this.game = game;
-		world = new World("res/worlds/overworld.lvl");
+		world = new World(game, "res/worlds/overworld.lvl");
 		player = new Player(game, world.getSpawnX(), world.getSpawnY());
 	}
 	
