@@ -18,10 +18,10 @@ public class KeyManager implements KeyListener {
 	
 	// Creating Key Events for all possible inputs
 	public void tick() {
-		up = keys[KeyEvent.VK_UP];
-		down = keys[KeyEvent.VK_DOWN];
-		left = keys[KeyEvent.VK_LEFT];
-		right = keys[KeyEvent.VK_RIGHT];
+		up = keys[KeyEvent.VK_W];
+		down = keys[KeyEvent.VK_S];
+		left = keys[KeyEvent.VK_A];
+		right = keys[KeyEvent.VK_D];
 	}
 	
 	@Override

@@ -3,7 +3,7 @@ package game_engine.src.Entitys;
 import java.awt.Graphics;
 
 import game_engine.src.Graphics.Assets;
-import game_engine.src.Main.Game;
+import game_engine.src.Main.Handler;
 import game_engine.src.Tiles.Tile;
 
 // Author: Jacob Angel
@@ -11,8 +11,8 @@ import game_engine.src.Tiles.Tile;
 
 public class Player extends Creature {
 	
-	public Player(Game game, float x, float y) {
-		super(game, x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT, Creature.DEFAULT_WIDTH, Creature.DEFAULT_HEIGHT);
+	public Player(Handler handler, float x, float y) {
+		super(handler, x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT, Creature.DEFAULT_WIDTH, Creature.DEFAULT_HEIGHT);
 	}
 
 	// Reads user input then moves the player based on the input and centers the camera around the player
@@ -20,23 +20,23 @@ public class Player extends Creature {
 	public void tick() {
 		getInput();
 		move();
-		game.getGameCamera().centerOnEntity(this);
+		handler.getGameCamera().centerOnEntity(this);
 	}
 	
 	private void getInput() {
 		xMove = 0;
 		yMove = 0;
 		
-		if(game.getKeyManager().up) {
+		if(handler.getKeyManager().up) {
 			yMove = -speed;
 		}
-		if(game.getKeyManager().down) {
+		if(handler.getKeyManager().down) {
 			yMove = speed;
 		}
-		if(game.getKeyManager().left) {
+		if(handler.getKeyManager().left) {
 			xMove = -speed;
 		}
-		if(game.getKeyManager().right) {
+		if(handler.getKeyManager().right) {
 			xMove = speed;
 		}
 	}
@@ -44,8 +44,8 @@ public class Player extends Creature {
 	// Renders the player and camera to the game
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Assets.rigby, (int) (x - game.getGameCamera().getxOffset()), 
-				(int) (y - game.getGameCamera().getyOffset()), width, height, null);
+		g.drawImage(Assets.rigby, (int) (x - handler.getGameCamera().getxOffset()), 
+				(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
 	}
 
 }

@@ -3,8 +3,7 @@ package game_engine.src.States;
 import java.awt.Graphics;
 
 import game_engine.src.Entitys.Player;
-import game_engine.src.Graphics.Assets;
-import game_engine.src.Main.Game;
+import game_engine.src.Main.Handler;
 import game_engine.src.Worlds.World;
 
 // Author: Jacob Angel
@@ -17,10 +16,11 @@ public class GameState extends State {
 	private World world;
 	
 	// Initialize the gamestate objects
-	public GameState(Game game) {
-		super(game);
-		world = new World(game, "res/worlds/overworld.lvl");
-		player = new Player(game, world.getSpawnX(), world.getSpawnY());
+	public GameState(Handler handler) {
+		super(handler);
+		world = new World(handler, "res/worlds/overworld.lvl");
+		handler.setWorld(world);
+		player = new Player(handler, world.getSpawnX(), world.getSpawnY());
 	}
 	
 	// Tick them all

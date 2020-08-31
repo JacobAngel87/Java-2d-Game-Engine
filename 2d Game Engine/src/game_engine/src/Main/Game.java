@@ -36,6 +36,9 @@ public class Game implements Runnable {
 	// Camera Variables
 	private GameCamera gameCamera;
 	
+	// Handler Variables
+	private Handler handler;
+	
 	// Game class constructor
 	public Game(String title) {
 		this.title = title;
@@ -80,10 +83,11 @@ public class Game implements Runnable {
 		display = new Display(title);
 		width = display.getWidth();
 		height = display.getHeight();
+		display.getFrame().addKeyListener(keyManager);
 		Assets.init();
 		gameCamera = new GameCamera(this, 0, 0);
-		display.getFrame().addKeyListener(keyManager);
-		overworld = new GameState(this);
+		handler = new Handler(this);
+		overworld = new GameState(handler);
 		State.setState(overworld);
 	}
 	

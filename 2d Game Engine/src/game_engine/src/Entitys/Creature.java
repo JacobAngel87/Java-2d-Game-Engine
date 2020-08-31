@@ -1,6 +1,6 @@
 package game_engine.src.Entitys;
 
-import game_engine.src.Main.Game;
+import game_engine.src.Main.Handler;
 import game_engine.src.Tiles.Tile;
 
 // Author: Jacob Angel
@@ -16,8 +16,8 @@ public abstract class Creature extends Entity {
 	protected float speed;
 	protected float xMove, yMove;
 	
-	public Creature(Game game, float x, float y, int width, int height) {
-		super(game, x, y, width, height);
+	public Creature(Handler handler, float x, float y, int width, int height) {
+		super(handler, x, y, width, height);
 		speed = DEFAULT_SPEED;
 		xMove = 0;
 		yMove = 0;

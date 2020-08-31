@@ -2,17 +2,17 @@ package game_engine.src.States;
 
 import java.awt.Graphics;
 
-import game_engine.src.Main.Game;
+import game_engine.src.Main.Handler;
 
 // Author: Jacob Angel 
 // Date: 8/30/2020
 
 public abstract class State {
 	
-	protected Game game;
+	protected Handler handler;
 	
-	public State(Game game) {
-		this.game = game;
+	public State(Handler handler) {
+		this.handler = handler;
 	}
 	
 	// State Variables
