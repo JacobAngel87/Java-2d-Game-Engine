@@ -4,6 +4,9 @@ import java.awt.Graphics;
 
 import game_engine.src.Main.Game;
 
+// Author: Jacob Angel
+// Date: 8/30/2020
+
 public abstract class Entity {
 	
 	// Protected variables for all Sub-classes

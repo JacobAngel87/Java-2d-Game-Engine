@@ -6,13 +6,20 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
+// Author: Jacob Angel
+// Date: 8/30/2020
+
 public class Display {
+	
+	// JFrame and Canvas variables 
 	private int width, height;
 	private String title;
 	private JFrame frame;
 	private Canvas canvas;
 	private Dimension screenSize;
 	
+	// Constucor of the display class
+	// Gets the computers screen size and makes a JFrame fitted to that size
 	public Display(String title) {
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		
@@ -41,6 +48,7 @@ public class Display {
 		frame.pack();
 	}
 	
+	// Getters
 	public JFrame getFrame() {
 		return frame;
 	}

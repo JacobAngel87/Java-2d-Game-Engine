@@ -3,15 +3,20 @@ package game_engine.src.Main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeyManager implements KeyListener {
+// Author: Jacob Angel
+// Date: 8/30/2020
 
+public class KeyManager implements KeyListener {
 	
+	// Class Variables
 	private boolean[] keys;
 	public boolean up, down, left, right;
 	
 	public KeyManager() {
 		keys = new boolean[256];
 	}
+	
+	// Creating Key Events for all possible inputs
 	public void tick() {
 		up = keys[KeyEvent.VK_UP];
 		down = keys[KeyEvent.VK_DOWN];

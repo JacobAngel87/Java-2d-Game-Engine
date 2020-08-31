@@ -3,8 +3,10 @@ package game_engine.src.Tiles;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+// Author: Jacob Angel
+// Date: 8/30/2020
+
 public class Tile {
-	
 	
 	// Static Tile Initialization
 	public static Tile[] tiles = new Tile[256];
@@ -39,6 +41,7 @@ public class Tile {
 		return false;
 	}
 	
+	// Getters
 	public int getId() {
 		return id;
 	}

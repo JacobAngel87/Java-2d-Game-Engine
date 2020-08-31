@@ -2,10 +2,17 @@ package game_engine.src.States;
 
 import java.awt.Graphics;
 
+import game_engine.src.Main.Game;
+
+// Author: Jacob Angel 
+// Date: 8/30/2020
+
 public abstract class State {
 	
-	public State() {
-		
+	protected Game game;
+	
+	public State(Game game) {
+		this.game = game;
 	}
 	
 	// State Variables
@@ -14,7 +21,6 @@ public abstract class State {
 	public static State getState() {
 		return currentState;
 	}
-	
 	public static void setState(State state) {
 		currentState = state;
 	}

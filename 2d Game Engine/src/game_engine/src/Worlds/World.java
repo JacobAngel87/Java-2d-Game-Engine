@@ -6,6 +6,9 @@ import game_engine.src.Main.Game;
 import game_engine.src.Main.Utils;
 import game_engine.src.Tiles.Tile;
 
+// Author: Jacob Angel
+// Date: 8/30/2020
+
 public class World {
 	
 	private int width, height;
@@ -60,6 +63,7 @@ public class World {
 		}
 	}
 
+	// Getters and Setters
 	public int getSpawnX() {
 		return spawnX;
 	}
