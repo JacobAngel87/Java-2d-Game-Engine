@@ -8,7 +8,7 @@ public class Assets {
 	public static BufferedImage grass, stone, water, dirt, rigby, townOnDirt, townOnGrass;
 	
 	public static void init() {
-		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet_v3.3.png"));
+		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet_v4.png"));
 		grass = sheet.crop(0, 0, width, height);
 		water = sheet.crop(width, 0, width, height);
 		stone = sheet.crop(0, height, width, height);
