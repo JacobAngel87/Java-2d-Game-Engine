@@ -14,8 +14,6 @@ public class Tile {
 	public static Tile grassTile = new GrassTile(1);
 	public static Tile rockTile = new RockTile(2);
 	public static Tile waterTile = new WaterTile(3);
-	public static Tile townOnDirtTile = new TownOnDirtTile(4);
-	public static Tile townOnGrassTile = new TownOnGrassTile(5);
 	
 	// Class variables
 	public static final int TILEWIDTH = 64, TILEHEIGHT = 64;

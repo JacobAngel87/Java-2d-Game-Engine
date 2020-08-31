@@ -44,7 +44,7 @@ public class Player extends Creature {
 	// Renders the player and camera to the game
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Assets.rigby, (int) (x - handler.getGameCamera().getxOffset()), 
+		g.drawImage(Assets.player, (int) (x - handler.getGameCamera().getxOffset()), 
 				(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
 	}
 
