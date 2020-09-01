@@ -1,6 +1,7 @@
 package game_engine.src.Entitys;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import game_engine.src.Main.Handler;
 
@@ -13,6 +14,7 @@ public abstract class Entity {
 	protected float x, y;
 	protected int width, height;
 	protected Handler handler;
+	protected Rectangle bounds;
 	
 	// Entity constructor method
 	public Entity(Handler handler , float x, float y, int width, int height) {
@@ -21,6 +23,7 @@ public abstract class Entity {
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		bounds = new Rectangle(0, 0, width, height);
 	}
 	
 	// Abstract methods for sub-classes

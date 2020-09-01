@@ -45,6 +45,10 @@ public class World {
 	}
 	
 	public Tile getTile(int x, int y) {
+		if(x < 0 || y < 0 || x > width || y > height) {
+			return Tile.grassTile;
+		}
+			
 		Tile t = Tile.tiles[worldTiles[x][y]];
 		if(t == null) {
 			return Tile.dirtTile;
@@ -84,6 +88,14 @@ public class World {
 
 	public void setSpawnY(int spawnY) {
 		this.spawnY = spawnY;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
 	}
 	
 }

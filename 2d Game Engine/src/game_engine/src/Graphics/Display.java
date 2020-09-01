@@ -43,7 +43,7 @@ public class Display {
 		canvas.setPreferredSize(screenSize);
 		canvas.setMaximumSize(screenSize);
 		canvas.setMinimumSize(screenSize);
-	
+		
 		frame.add(canvas);
 		frame.pack();
 	}

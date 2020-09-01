@@ -1,5 +1,6 @@
 package game_engine.src.Entitys;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import game_engine.src.Graphics.Assets;
@@ -13,6 +14,10 @@ public class Player extends Creature {
 	
 	public Player(Handler handler, float x, float y) {
 		super(handler, x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT, Creature.DEFAULT_WIDTH, Creature.DEFAULT_HEIGHT);
+		bounds.x = (width / 3) + (width / 11);
+		bounds.y = (height / 5);
+		bounds.width = (width / 5);
+		bounds.height = (int) (height / 1.3);
 	}
 
 	// Reads user input then moves the player based on the input and centers the camera around the player

@@ -32,6 +32,7 @@ public class Game implements Runnable {
 	
 	// Input varibles
 	private KeyManager keyManager;
+	private MouseManager mouseManager;
 	
 	// Camera Variables
 	private GameCamera gameCamera;
@@ -43,6 +44,7 @@ public class Game implements Runnable {
 	public Game(String title) {
 		this.title = title;
 		keyManager = new KeyManager();
+		mouseManager = new MouseManager();
 	}
 	
 	public void run() {
@@ -83,10 +85,14 @@ public class Game implements Runnable {
 		display = new Display(title);
 		width = display.getWidth();
 		height = display.getHeight();
-		display.getFrame().addKeyListener(keyManager);
-		Assets.init();
-		gameCamera = new GameCamera(this, 0, 0);
 		handler = new Handler(this);
+		display.getFrame().addKeyListener(keyManager);
+		display.getFrame().addMouseListener(mouseManager);
+		display.getFrame().addMouseMotionListener(mouseManager);
+		display.getCanvas().addMouseListener(mouseManager);
+		display.getCanvas().addMouseMotionListener(mouseManager);
+		Assets.init();
+		gameCamera = new GameCamera(handler, 0, 0);
 		overworld = new GameState(handler);
 		State.setState(overworld);
 	}
@@ -102,6 +108,10 @@ public class Game implements Runnable {
 	
 	// Gets the current state of the game and renders it
 	private void render() {
+		
+		if(display.getFrame().hasFocus() != true) {
+			display.getFrame().requestFocus();
+		} 
 		bs = display.getCanvas().getBufferStrategy();
 		if(bs == null) {
 			display.getCanvas().createBufferStrategy(3);
@@ -142,6 +152,10 @@ public class Game implements Runnable {
 	// Getters and Setters
 	public KeyManager getKeyManager() {
 		return keyManager;
+	}
+	
+	public MouseManager getMouseManager () {
+		return mouseManager;
 	}
 	
 	public GameCamera getGameCamera() {

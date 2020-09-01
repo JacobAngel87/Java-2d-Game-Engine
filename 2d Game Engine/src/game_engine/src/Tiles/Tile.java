@@ -3,6 +3,8 @@ package game_engine.src.Tiles;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import game_engine.src.Main.Handler;
+
 // Author: Jacob Angel
 // Date: 8/30/2020
 
@@ -16,7 +18,7 @@ public class Tile {
 	public static Tile waterTile = new WaterTile(3);
 	
 	// Class variables
-	public static final int TILEWIDTH = 64, TILEHEIGHT = 64;
+	public static final int TILEWIDTH = Handler.DEFAULT_WIDTH, TILEHEIGHT = Handler.DEFAULT_HEIGHT;
 	
 	protected BufferedImage texture;
 	protected final int id;

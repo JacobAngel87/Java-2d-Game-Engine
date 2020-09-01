@@ -13,7 +13,7 @@ public class Assets {
 	
 	// Initializing static assets
 	public static void init() {
-		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet_v5.png"));
+		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet_v5.2.png"));
 		grass = sheet.crop(0, 0, width, height);
 		water = sheet.crop(width, 0, width, height);
 		stone = sheet.crop(0, height, width, height);
