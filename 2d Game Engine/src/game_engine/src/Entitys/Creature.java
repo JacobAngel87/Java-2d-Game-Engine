@@ -16,6 +16,8 @@ public abstract class Creature extends Entity {
 	protected float speed;
 	protected float xMove, yMove;
 	
+	private int count = 0;
+	
 	public Creature(Handler handler, float x, float y, int width, int height) {
 		super(handler, x, y, width, height);
 		speed = DEFAULT_SPEED;
@@ -62,6 +64,7 @@ public abstract class Creature extends Entity {
 			} else {
 				y = ty * Tile.TILEHEIGHT + Tile.TILEHEIGHT - bounds.y;
 			}
+			
 		}else if(yMove > 0) { // Bottom side collision
 			int ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
 			if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
@@ -75,6 +78,10 @@ public abstract class Creature extends Entity {
 	
 	protected boolean collisionWithTile(int x, int y) {
 		return handler.getWorld().getTile(x, y).isSolid();
+	}
+	
+	protected boolean collisionWithDangerTile(int x, int y) {
+		return handler.getWorld().getTile(x, y).isDanger();
 	}
 	
 	// Getters and Setters 

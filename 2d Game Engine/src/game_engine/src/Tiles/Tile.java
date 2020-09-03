@@ -3,12 +3,13 @@ package game_engine.src.Tiles;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import game_engine.src.Graphics.Assets;
 import game_engine.src.Main.Handler;
 
 // Author: Jacob Angel
 // Date: 8/30/2020
 
-public class Tile {
+public abstract class Tile {
 	
 	// Static Tile Initialization
 	public static Tile[] tiles = new Tile[256];
@@ -29,15 +30,17 @@ public class Tile {
 		tiles[id] = this;
 	}
 	
-	public void tick() {
-		
-	}
+	// Ticks every tile in range
+	public abstract void tick();
 	
-	public void render(Graphics g, int x, int y) {
-		g.drawImage(texture, x, y, TILEWIDTH, TILEHEIGHT,  null);
-	}
+	// Renders every tile in range
+	public abstract void render(Graphics g, int x, int y);
 	
 	public boolean isSolid() {
+		return false;
+	}
+	
+	public boolean isDanger() {
 		return false;
 	}
 	
