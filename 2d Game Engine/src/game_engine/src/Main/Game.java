@@ -28,7 +28,7 @@ public class Game implements Runnable {
 	private BufferStrategy bs;
 	
 	// State variables
-	public static State overworld;
+	public static GameState overworld;
 	
 	// Input varibles
 	private KeyManager keyManager;

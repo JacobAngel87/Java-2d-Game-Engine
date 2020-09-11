@@ -3,6 +3,7 @@ package game_engine.src.States;
 import java.awt.Graphics;
 
 import game_engine.src.Entitys.Player;
+import game_engine.src.Graphics.Assets;
 import game_engine.src.Main.Handler;
 import game_engine.src.Worlds.World;
 
@@ -12,8 +13,8 @@ import game_engine.src.Worlds.World;
 public class GameState extends State {
 	
 	// Things that are in this state of the game
-	private Player player;
 	private World world;
+	private Player player;
 	
 	// Initialize the gamestate objects
 	public GameState(Handler handler) {
