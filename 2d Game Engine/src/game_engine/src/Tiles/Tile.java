@@ -18,6 +18,8 @@ public abstract class Tile {
 	public static Tile rockTile = new RockTile(2);
 	public static Tile waterTile = new WaterTile(3);
 	
+	// TODO Figure a better way to get tiles.
+	
 	// Class variables
 	public static final int TILEWIDTH = Handler.DEFAULT_WIDTH, TILEHEIGHT = Handler.DEFAULT_HEIGHT;
 	

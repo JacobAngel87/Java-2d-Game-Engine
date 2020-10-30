@@ -1,7 +1,6 @@
 package game_engine.src.Worlds;
 
 import java.awt.Graphics;
-
 import game_engine.src.Entitys.Player;
 import game_engine.src.Graphics.Assets;
 import game_engine.src.Main.Handler;
@@ -9,15 +8,13 @@ import game_engine.src.Main.Utils;
 import game_engine.src.Tiles.Tile;
 
 // Author: Jacob Angel
-// Date: 8/30/2020
+// Date: 8/30/2020ttttt
 
 public class World {
 	
 	private int width, height;
 	private int spawnX, spawnY;
 	private int[][] worldTiles;
-	private String overworld = "res/worlds/overworld.lvl";
-	private String testTown = "res/worlds/testTown.lvl";
 	private Handler handler;
 		
 	public World(Handler handler, String path) {

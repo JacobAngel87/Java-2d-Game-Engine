@@ -1,6 +1,10 @@
 package game_engine.src.Entitys;
 
+import java.util.Random;
+
 import game_engine.src.Main.Handler;
+import game_engine.src.States.EncounterState;
+import game_engine.src.States.State;
 import game_engine.src.Tiles.Tile;
 
 // Author: Jacob Angel
@@ -15,9 +19,7 @@ public abstract class Creature extends Entity {
 	
 	protected float speed;
 	protected float xMove, yMove;
-	
-	private int count = 0;
-	
+		
 	public Creature(Handler handler, float x, float y, int width, int height) {
 		super(handler, x, y, width, height);
 		speed = DEFAULT_SPEED;
@@ -41,7 +43,7 @@ public abstract class Creature extends Entity {
 			} else {
 				x = tx * Tile.TILEWIDTH - bounds.x - bounds.width - 1;
 			}
-			
+			checkDanger(true, true);
 		} else if(xMove < 0) { // Left side collision
 			
 			int tx = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
@@ -51,6 +53,7 @@ public abstract class Creature extends Entity {
 			} else {
 				x = tx * Tile.TILEWIDTH + Tile.TILEWIDTH - bounds.x;
 			}
+			checkDanger(true, false);
 		}
 	}
 	
@@ -64,7 +67,7 @@ public abstract class Creature extends Entity {
 			} else {
 				y = ty * Tile.TILEHEIGHT + Tile.TILEHEIGHT - bounds.y;
 			}
-			
+			checkDanger(false, true);
 		}else if(yMove > 0) { // Bottom side collision
 			int ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
 			if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
@@ -72,6 +75,41 @@ public abstract class Creature extends Entity {
 				y += yMove;
 			} else {
 				y = ty * Tile.TILEHEIGHT - bounds.y - bounds.height - 1;
+			}
+			checkDanger(false, false);
+		}
+	}
+	
+	// My coding skills are complete garbage
+	// TODO Get good!
+	private void checkDanger(boolean horo, boolean side) {
+		if(horo) {
+			if(side) {
+				int tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
+				if(collisionWithDangerTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
+						collisionWithDangerTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)) {
+					checkBattle();
+				}
+			} else {
+				int tx = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
+				if(collisionWithDangerTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
+						collisionWithDangerTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)) {
+					checkBattle();
+				}
+			}
+		} else {
+			if(side) {
+				int ty = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
+				if(collisionWithDangerTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
+						collisionWithDangerTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)) {
+					checkBattle();
+				}
+			} else {
+				int ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
+				if(collisionWithDangerTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
+						collisionWithDangerTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)) {
+					checkBattle();
+				}
 			}
 		}
 	}
@@ -82,6 +120,17 @@ public abstract class Creature extends Entity {
 	
 	protected boolean collisionWithDangerTile(int x, int y) {
 		return handler.getWorld().getTile(x, y).isDanger();
+	}
+	
+	// Random Battles
+	
+	private void checkBattle() {
+		Random r = new Random();
+		int num = r.nextInt(800);
+		if(num == 799) {
+			State encounter = new EncounterState(handler);
+			State.setState(encounter);
+		}
 	}
 	
 	// Getters and Setters 
