@@ -1,5 +1,6 @@
 package game_engine.src.Entitys;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import game_engine.src.Main.Handler;
@@ -32,13 +33,29 @@ public abstract class Creature extends Entity {
 		xMove();
 		yMove();
 	}
+	private int calcTempX(boolean left) {
+		int tx;
+		if(left) {
+			tx = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
+		} else {
+			tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
+		}
+		return tx;
+	}
+	private int calcTempY(boolean top) {
+		int ty;
+		if(top) {
+			ty = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
+		} else {
+			ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
+		}
+		return ty;
+	}
 	
 	public void xMove() {
 		if(xMove > 0) { // Right side collision 
-			
-			int tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
-			if(!collisionWithTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
-					!collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)) {
+			int tx = calcTempX(false);
+			if(rightSideColliding(tx)) {
 				x += xMove;
 			} else {
 				x = tx * Tile.TILEWIDTH - bounds.x - bounds.width - 1;
@@ -46,9 +63,8 @@ public abstract class Creature extends Entity {
 			checkDanger(true, true);
 		} else if(xMove < 0) { // Left side collision
 			
-			int tx = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
-			if(!collisionWithTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
-					!collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)) {
+			int tx = calcTempX(true);
+			if(leftSideColliding(tx)) {
 				x += xMove;
 			} else {
 				x = tx * Tile.TILEWIDTH + Tile.TILEWIDTH - bounds.x;
@@ -60,18 +76,16 @@ public abstract class Creature extends Entity {
 	public void yMove() {
 		if(yMove < 0) { // Top side collision
 			
-			int ty = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
-			if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
-					!collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)) {
+			int ty = calcTempY(true);
+			if(topSideColliding(ty)) {
 				y += yMove;
 			} else {
 				y = ty * Tile.TILEHEIGHT + Tile.TILEHEIGHT - bounds.y;
 			}
 			checkDanger(false, true);
 		}else if(yMove > 0) { // Bottom side collision
-			int ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
-			if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
-					!collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)) {
+			int ty = calcTempY(false);
+			if(bottomSideColliding(ty)) {
 				y += yMove;
 			} else {
 				y = ty * Tile.TILEHEIGHT - bounds.y - bounds.height - 1;
@@ -83,37 +97,36 @@ public abstract class Creature extends Entity {
 	// My coding skills are complete garbage
 	// TODO Get good!
 	private void checkDanger(boolean horo, boolean side) {
+		ArrayList<Integer> calcs = new ArrayList<Integer>();
+		calcs = getMovementCalcs();
 		if(horo) {
 			if(side) {
-				int tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
-				if(collisionWithDangerTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
-						collisionWithDangerTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)) {
-					checkBattle();
+				int tx = calcTempX(false);
+				if(collisionWithDangerTile(tx, calcs.get(0)) && collisionWithDangerTile(tx, calcs.get(1))) {
+					checkBattle(tx, calcs.get(0));
 				}
 			} else {
-				int tx = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
-				if(collisionWithDangerTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
-						collisionWithDangerTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)) {
-					checkBattle();
+				int tx = calcTempX(true);
+				if(collisionWithDangerTile(tx, calcs.get(0)) && collisionWithDangerTile(tx, calcs.get(1))) {
+					checkBattle(tx, calcs.get(0));
 				}
 			}
 		} else {
 			if(side) {
-				int ty = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
-				if(collisionWithDangerTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
-						collisionWithDangerTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)) {
-					checkBattle();
+				int ty = calcTempY(true);
+				if(collisionWithDangerTile(calcs.get(2), ty) && collisionWithDangerTile(calcs.get(3), ty)) {
+					checkBattle(calcs.get(2), ty);
 				}
 			} else {
-				int ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
-				if(collisionWithDangerTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
-						collisionWithDangerTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)) {
-					checkBattle();
+				int ty = calcTempY(false);
+				if(collisionWithDangerTile(calcs.get(2), ty) && collisionWithDangerTile(calcs.get(3), ty)) {
+					checkBattle(calcs.get(2), ty);
 				}
 			}
 		}
 	}
 	
+	// Protected Collision Methods
 	protected boolean collisionWithTile(int x, int y) {
 		return handler.getWorld().getTile(x, y).isSolid();
 	}
@@ -122,17 +135,61 @@ public abstract class Creature extends Entity {
 		return handler.getWorld().getTile(x, y).isDanger();
 	}
 	
+	private ArrayList<Integer> getMovementCalcs() {
+		ArrayList<Integer> theMoves = new ArrayList<Integer>();
+		theMoves.add((int) (y + bounds.y) / Tile.TILEHEIGHT);
+		theMoves.add((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH);
+		theMoves.add((int) (x + bounds.x) / Tile.TILEWIDTH);
+		theMoves.add((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH);
+		return theMoves; 
+	}
+	
 	// Random Battles
 	
-	private void checkBattle() {
+	private void checkBattle(int x, int y) {
 		Random r = new Random();
 		int num = r.nextInt(800);
 		if(num == 799) {
-			State encounter = new EncounterState(handler);
+			Tile currentTile = handler.getWorld().getTile(x, y);
+			State encounter = new EncounterState(handler, currentTile);
 			State.setState(encounter);
 		}
 	}
 	
+	// Collision Detection
+	private boolean rightSideColliding(int tx) {
+		if(!collisionWithTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
+				!collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private boolean leftSideColliding(int tx) {
+		if(!collisionWithTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
+				!collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	private boolean topSideColliding(int ty) {
+		if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
+				!collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	private boolean bottomSideColliding(int ty) {
+		if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
+				!collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	// Getters and Setters 
 	public float getSpeed() {
 		return speed;

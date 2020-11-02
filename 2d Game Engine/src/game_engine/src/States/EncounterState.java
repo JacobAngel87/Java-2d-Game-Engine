@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import game_engine.src.Main.Handler;
+import game_engine.src.Tiles.Tile;
 
 public class EncounterState extends State {
 
-	public EncounterState(Handler handler) {
+	private Tile tile;
+	public EncounterState(Handler handler, Tile tile) {
 		super(handler);
-		// TODO Auto-generated constructor stub
+		this.tile = tile;
 	}
 
 	@Override
@@ -21,10 +23,7 @@ public class EncounterState extends State {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.black);
-		g.fillRect(0, 0, handler.getWidth(), handler.getHeight());
-		g.setColor(Color.white);
-		g.drawString("Encounter Has Started!", handler.getWidth() / 2, handler.getWidth() / 4);
+		g.drawImage(tile.getTexture(), 0, 0, handler.getWidth(), handler.getHeight(), null);
 	}
 
 }

@@ -8,7 +8,7 @@ import game_engine.src.Main.Utils;
 import game_engine.src.Tiles.Tile;
 
 // Author: Jacob Angel
-// Date: 8/30/2020ttttt
+// Date: 8/30/2020
 
 public class World {
 	
