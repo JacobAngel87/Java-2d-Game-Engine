@@ -194,7 +194,6 @@ public abstract class Creature extends Entity {
 			Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
 			try {
 				capture = new Robot().createScreenCapture(screenRect);
-				capture = Utils.grayScaleImage(capture);
 			} catch (AWTException e) {
 				e.printStackTrace();
 			}
