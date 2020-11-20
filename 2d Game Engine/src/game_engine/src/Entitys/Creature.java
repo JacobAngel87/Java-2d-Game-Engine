@@ -1,9 +1,15 @@
 package game_engine.src.Entitys;
 
+import java.awt.AWTException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
 import game_engine.src.Main.Handler;
+import game_engine.src.Main.Utils;
 import game_engine.src.States.EncounterState;
 import game_engine.src.States.State;
 import game_engine.src.Tiles.Tile;
@@ -33,25 +39,6 @@ public abstract class Creature extends Entity {
 		xMove();
 		yMove();
 	}
-	private int calcTempX(boolean left) {
-		int tx;
-		if(left) {
-			tx = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
-		} else {
-			tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
-		}
-		return tx;
-	}
-	private int calcTempY(boolean top) {
-		int ty;
-		if(top) {
-			ty = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
-		} else {
-			ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
-		}
-		return ty;
-	}
-	
 	public void xMove() {
 		if(xMove > 0) { // Right side collision 
 			int tx = calcTempX(false);
@@ -138,22 +125,10 @@ public abstract class Creature extends Entity {
 	private ArrayList<Integer> getMovementCalcs() {
 		ArrayList<Integer> theMoves = new ArrayList<Integer>();
 		theMoves.add((int) (y + bounds.y) / Tile.TILEHEIGHT);
-		theMoves.add((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH);
+		theMoves.add((int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT);
 		theMoves.add((int) (x + bounds.x) / Tile.TILEWIDTH);
 		theMoves.add((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH);
 		return theMoves; 
-	}
-	
-	// Random Battles
-	
-	private void checkBattle(int x, int y) {
-		Random r = new Random();
-		int num = r.nextInt(800);
-		if(num == 799) {
-			Tile currentTile = handler.getWorld().getTile(x, y);
-			State encounter = new EncounterState(handler, currentTile);
-			State.setState(encounter);
-		}
 	}
 	
 	// Collision Detection
@@ -188,6 +163,44 @@ public abstract class Creature extends Entity {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	private int calcTempX(boolean left) {
+		int tx;
+		if(left) {
+			tx = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
+		} else {
+			tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
+		}
+		return tx;
+	}
+	private int calcTempY(boolean top) {
+		int ty;
+		if(top) {
+			ty = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
+		} else {
+			ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
+		}
+		return ty;
+	}
+	
+	// Random Battles
+	private void checkBattle(int x, int y) {
+		Random r = new Random();
+		int num = r.nextInt(800);
+		BufferedImage capture = null;
+		if(num == 799) {
+			// Screen Capturing
+			Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+			try {
+				capture = new Robot().createScreenCapture(screenRect);
+				capture = Utils.grayScaleImage(capture);
+			} catch (AWTException e) {
+				e.printStackTrace();
+			}
+			Tile currentTile = handler.getWorld().getTile(x, y);
+			State encounter = new EncounterState(handler, currentTile, capture);
+			State.setState(encounter);
 		}
 	}
 	// Getters and Setters 

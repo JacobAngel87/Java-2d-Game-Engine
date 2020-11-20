@@ -9,12 +9,12 @@ public class Assets {
 	
 	// Static Assets
 	private static final int width = 32, height = 32;
-	public static BufferedImage grass, stone, water, dirt, player, town;
+	public static BufferedImage grass, stone, water, dirt, player, town, enemy;
 	public static BufferedImage[] waterAni;
 	
 	// Initializing static assets
 	public static void init() {
-		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet_v5.3.png"));
+		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet_v5.4.png"));
 		
 		waterAni = new BufferedImage[2];
 		waterAni[0] = sheet.crop(width, 0, width, height);
@@ -25,6 +25,7 @@ public class Assets {
 		stone = sheet.crop(0, height, width, height);
 		dirt = sheet.crop(width, height, width, height);
 		player = sheet.crop(width * 2, height, width, height);
+		enemy = sheet.crop(width * 3, height, width, height);
 		town = sheet.crop(width * 3, 0, width, height);
 	}
 }
