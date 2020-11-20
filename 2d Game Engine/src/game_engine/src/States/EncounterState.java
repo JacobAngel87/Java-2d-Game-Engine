@@ -26,7 +26,7 @@ public class EncounterState extends State {
 	@Override
 	public void tick() {
 		if(handler.getKeyManager().enter) {
-			State.setState(handler.getGame().overworld);
+			State.setState(handler.getGame().overworld); // I think I messed something up so I am going to re-commit this to the github master branch
 		}
 	}
 
